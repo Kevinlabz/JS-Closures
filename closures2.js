@@ -4,7 +4,7 @@
 
 function outer() {
   var name = 'Tyler';
-  return function () {
+  return function() {
     return 'The original name was ' + name;
   }
 }
@@ -40,9 +40,9 @@ function callFriend(name) {
 /* Above you're given a callFriend function that returns the dial function.
 Create a callJake function that when invoked with '435-555-9248' returns 'Calling Jake at 435-555-9248'
 in your console. */
-//Code Here
+  //Code Here
 
-function callJake(numString) {
+function callJake (numString) {
   var name1 = 'Jake';
   var dialFn = callFriend(name1);
   return dialFn(numString);
@@ -62,7 +62,7 @@ console.log('Showing return val of callJake: ', temp);
 properly. */
 
 //Code Here
-function makeCounter() {
+function makeCounter () {
   var counter = 0;
   return (function increment() {
     counter++;
@@ -73,11 +73,11 @@ function makeCounter() {
 }
 
 //Uncomment this once you make your function
-var count = makeCounter();
-count(); // 1
-count(); // 2
-count(); // 3
-count(); // 4
+   var count = makeCounter();
+   count(); // 1
+   count(); // 2
+   count(); // 3
+   count(); // 4
 
 
 
@@ -103,12 +103,12 @@ function counterFactory(value) {
   var counter = value;
 
   return {
-    inc: function () {
+    inc : function() {
       counter++;
       console.log('Value up: ', counter);
       return counter;
     },
-    dec: function () {
+    dec : function() {
       counter--;
       console.log('Value down: ', counter);
       return counter;
@@ -119,9 +119,9 @@ function counterFactory(value) {
 
 counter = counterFactory(10);
 var temp = counter.inc(); // 11
-counter.inc(); // 12
-counter.inc(); // 13
-counter.dec(); // 12
+counter.inc();// 12
+counter.inc();// 13
+counter.dec();// 12
 
 
 
@@ -138,9 +138,9 @@ function motivation(firstname, lastname) {
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
   // code message function here.
-  function message() {
-    return welcomeText + firstname + ' ' + lastname + '.';
-  }
+function message() {
+  return welcomeText + firstname +' '+ lastname + '.';
+}
 
   //Uncommment this to return the value of your invoked message function
   return message();
@@ -162,25 +162,25 @@ var temp = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy
 invokes privateMethod. Invoke this by calling module.publicMethod(); outside
 the module scope */
 
-var module = (function () {
+var module = (function() {
   var person = {
     name: "phillip",
     age: 29,
     location: "Utah"
   };
 
-  function privateMethod() {
-    return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
+  function privateMethod(){
+   return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
   }
 
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
     // Code here.
-    publicMethod: function () {
-      console.log('public method is executing');
-      console.log('showing object: ', person.name);
-      return privateMethod();
+    publicMethod : function () {
+        console.log('public method is executing');
+        console.log('showing object: ', person.name);
+        return privateMethod();
     }
   };
 
@@ -188,6 +188,44 @@ var module = (function () {
 
 var temp = module.publicMethod();
 console.log('Showing return val for PublicMethod: ', temp);
+
+
+//YUI Library Testing Method
+var TYPES = {
+    'undefined': 'undefined',
+    'number': 'number',
+    'boolean': 'boolean',
+    'string': 'string',
+    '[object Function]': 'function',
+    '[object RegExp]': 'regexp',
+    '[object Array]': 'array',
+    '[object Date]': 'date',
+    '[object Error]': 'error'
+},
+    TOSTRING = Object.prototype.toString;
+
+function type(o) {
+    return TYPES[typeof o] || TYPES[TOSTRING.call(o)] || (o ? 'object' : 'null');
+};
+
+
+//YUI Library Testing Method
+var TYPES = {
+    'undefined': 'undefined',
+    'number': 'number',
+    'boolean': 'boolean',
+    'string': 'string',
+    '[object Function]': 'function',
+    '[object RegExp]': 'regexp',
+    '[object Array]': 'array',
+    '[object Date]': 'date',
+    '[object Error]': 'error'
+},
+    TOSTRING = Object.prototype.toString;
+
+function type(o) {
+    return TYPES[typeof o] || TYPES[TOSTRING.call(o)] || (o ? 'object' : 'null');
+};
 
 
 /******************************************************************************\
@@ -205,25 +243,36 @@ var allUsers = ["Tom", "Dick", "Harry", "Anne", "Quinton", "Katie", "Mary"];
 function findPotentialFriends(existingFriends) {
   var tempArr = existingFriends;
 
+  function comparison (val) {
+    return (tempArr.indexOf(val) === -1);
+  }
+
   return (
     function tester(input) {
-      for (var i = 0; i < tempArr.length; i++) {
-        if (tempArr[i] === input) {
-          console.log('Showing inner looping: ', tempArr[i]);
+      console.log('Show me the input type: ' + type(input));
+      
+      if(type(input) === 'array') {
+        var tempReturnArr = input.filter(comparison);
+        tempReturnArr;
+        return tempReturnArr;
+      }
+
+      for(var i = 0; i < tempArr.length; i++){
+        if(tempArr[i] === input) {
           return false;
+        } else {
+          return true;
         }
       }
-      return true;
     }
   );
 }
 
-var isNotAFriend = findPotentialFriends(friends);
+var isNotAFriend = findPotentialFriends( friends );
 var temp = isNotAFriend(allUsers[0]); // false
-temp;
+temp
 temp = isNotAFriend(secondLevelFriends[2]); // true
-temp;
-
+temp
 
 /******************************************************************************\
  #PROBLEM-07 -- BLACK DIAMOND
@@ -232,13 +281,16 @@ temp;
 method, find all potential second level friends as well as potential friends
 from allUsers. */
 
-var potentialSecondLevelFriends = secondLevelFriends.filter(findPotentialFriends(friends));
-potentialSecondLevelFriends;
+var potentialSecondLevelFriends = findPotentialFriends( friends ); 
+var temp = potentialSecondLevelFriends(secondLevelFriends);
+console.log('Showing return val: ', temp);
 
 //I see so what they are asking to do is. filter secondLevel array to alluser and bring out the list.
-var allPotentialFriends = allUsers.filter(findPotentialFriends(friends))
-allPotentialFriends;
+// var allPotentialFriends = findPotentialFriends( friends );
+// var temp = allPotentialFriends(secondLevelFriends.concat(allUsers));
+// temp
 //Filter out first and second from all user list and show last two.
+
 /******************************************************************************\
 	#PROBLEM-08
 \******************************************************************************/
@@ -259,16 +311,11 @@ to 5. What we need to do is console.log(i) so that it logs like so:
  Fix the code below to log the desired output.
  */
 
-function closure(num) {
-  return function () {
-    console.log(num);
-  }
-}
-
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(closure(i), i * 1000);
+    setTimeout(function() {
+    	console.log(i)
+	}, i * 1000)
   }
 }
-
-console.log(timeOutCounter());
+timeOutCounter();
